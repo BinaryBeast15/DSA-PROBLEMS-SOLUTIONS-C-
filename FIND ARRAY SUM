@@ -1,0 +1,62 @@
+//FIND ARRAY SUM
+CODE :-
+vector<int> reverse(vector<int> v) { // A function that takes a vector of integers and returns the vector in reverse order
+    
+    int s = 0; // Start index for the vector
+    int e = v.size()-1; // End index for the vector
+    
+    while(s<e) // A loop that iterates until the start index is less than the end index
+    {
+        swap(v[s++], v[e--]); // Swapping the start and end elements of the vector, and updating the start and end indices
+    }
+    return v; // Return the reversed vector
+}
+
+vector<int> findArraySum(vector<int>&a, int n, vector<int>&b, int m) { // A function that takes two vectors of integers and their sizes, and returns their sum as a vector
+    
+    int i = n-1; // Index of the last element of vector a
+    int j = m-1; // Index of the last element of vector b
+    vector<int> ans; // A vector to store the sum
+    int carry = 0; // Variable to keep track of any carry-over
+    
+    while(i>=0 && j>=0) { // A loop that iterates as long as there are digits in both vectors
+        int val1 = a[i]; // Get the digit from vector a
+        int val2 = b[j]; // Get the digit from vector b
+            
+        int sum = val1 + val2 + carry; // Add the digits and the carry-over
+        
+        carry = sum/10; // Calculate the carry-over
+        sum = sum%10; // Calculate the remainder (actual digit)
+        ans.push_back(sum); // Add the remainder to the answer vector
+        i--; // Move to the next digit in vector a
+        j--; // Move to the next digit in vector b
+    }
+    
+    // If there are any digits remaining in vector a, add them to the answer vector
+    while(i>=0) {
+        int sum = a[i] + carry; // Add the digit and the carry-over
+        carry = sum/10; // Calculate the carry-over
+        sum = sum%10; // Calculate the remainder (actual digit)
+        ans.push_back(sum); // Add the remainder to the answer vector
+        i--; // Move to the next digit in vector a
+    }
+    
+    // If there are any digits remaining in vector b, add them to the answer vector
+    while(j>=0) {
+        int sum = b[j] + carry; // Add the digit and the carry-over
+        carry = sum/10; // Calculate the carry-over
+        int value = sum%10; // Calculate the remainder (actual digit)
+        ans.push_back(value); // Add the remainder to the answer vector
+        j--; // Move to the next digit in vector b
+    }
+    
+    // If there is any carry-over remaining, add it to the answer vector
+    while(carry != 0) {
+        int sum = carry; // The carry-over is the only remaining digit
+        carry = sum/10; // Calculate the carry-over (should be 0)
+        sum = sum%10; // Calculate the remainder (actual digit)
+        ans.push_back(sum); // Add the remainder to the answer vector
+    }
+    
+    return reverse(ans); // Return the reversed answer vector
+}
